@@ -19,5 +19,9 @@
         android:id="@+id/postDetailsFragment"
         android:name="com.example.postsappfri.ui.PostDetailsFragment"
         android:label="fragment_post_details"
-        tools:layout="@layout/fragment_post_details" />
+        tools:layout="@layout/fragment_post_details" >
+        <argument
+            android:name="post"
+            app:argType="com.example.postsappfri.data.model.PostResponseItem" />
+    </fragment>
 </navigation>
