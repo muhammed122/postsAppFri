@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,10 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.postsappfri.R;
-import com.example.postsappfri.data.model.PostResponseItem;
+import com.example.postsappfri.data.model.comment.CommentResponseItem;
+import com.example.postsappfri.data.model.post.PostResponseItem;
 import com.example.postsappfri.data.source.remote.RetrofitClient;
 import com.example.postsappfri.databinding.FragmentPostDetailsBinding;
-import com.example.postsappfri.databinding.FragmentPostsBinding;
+import com.example.postsappfri.ui.adapter.CommentAdapter;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +30,7 @@ public class PostDetailsFragment extends Fragment {
 
     FragmentPostDetailsBinding binding;
 
+    CommentAdapter commentAdapter;
 
     public PostDetailsFragment() {
         // Required empty public constructor
@@ -56,14 +61,40 @@ public class PostDetailsFragment extends Fragment {
                 });
     }
 
+    private void getComments(int postId) {
+        RetrofitClient.getService()
+                .getPostComments(postId)
+                .enqueue(new Callback<List<CommentResponseItem>>() {
+                    @Override
+                    public void onResponse(Call<List<CommentResponseItem>> call, Response<List<CommentResponseItem>> response) {
+                        Log.d("ddddddd", "resposne: "+response.message());
+
+                        if (response.isSuccessful())
+                            commentAdapter.addComments(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<CommentResponseItem>> call, Throwable t) {
+                        Log.d("ddddddd", "onFailure: "+t.getLocalizedMessage());
+                    }
+                });
+
+    }
+
     PostResponseItem post;
+
+    private void setUpCommentsRecycler() {
+        commentAdapter = new CommentAdapter();
+        binding.postCommentsRecycler.setAdapter(commentAdapter);
+        binding.postCommentsRecycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         post = PostDetailsFragmentArgs.fromBundle(getArguments())
                 .getPost();
-
+        getComments(post.getId());
 
     }
 
@@ -78,7 +109,7 @@ public class PostDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentPostDetailsBinding.bind(view);
-
+        setUpCommentsRecycler();
         if (post != null)
             bindUI(post);
     }

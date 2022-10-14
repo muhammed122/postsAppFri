@@ -1,4 +1,4 @@
-package com.example.postsappfri.data.model;
+package com.example.postsappfri.data.model.post;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -22,6 +22,6 @@
         tools:layout="@layout/fragment_post_details" >
         <argument
             android:name="post"
-            app:argType="com.example.postsappfri.data.model.PostResponseItem" />
+            app:argType="com.example.postsappfri.data.model.post.PostResponseItem" />
     </fragment>
 </navigation>

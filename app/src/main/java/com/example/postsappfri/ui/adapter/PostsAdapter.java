@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.postsappfri.data.model.PostResponseItem;
+import com.example.postsappfri.data.model.post.PostResponseItem;
 import com.example.postsappfri.databinding.ItemPostLayoutBinding;
 
 import java.util.List;

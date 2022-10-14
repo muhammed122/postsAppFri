@@ -14,7 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.postsappfri.R;
-import com.example.postsappfri.data.model.PostResponseItem;
+import com.example.postsappfri.data.model.post.PostResponseItem;
+import com.example.postsappfri.data.model.userModel.UserResponse;
 import com.example.postsappfri.data.source.remote.RetrofitClient;
 import com.example.postsappfri.databinding.FragmentPostsBinding;
 import com.example.postsappfri.ui.adapter.PostsAdapter;
@@ -81,6 +82,23 @@ public class PostsFragment extends Fragment implements PostsAdapter.PostAction {
         binding = FragmentPostsBinding.bind(view);
         initUI();
         getPosts();
+     //   testLogin();
+    }
+
+    private void testLogin(){
+        RetrofitClient.getService()
+                .testLogin("user10@app.com","password")
+                .enqueue(new Callback<UserResponse>() {
+                    @Override
+                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                        Log.d("sssssss", "onResponse: "+response.code() +response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserResponse> call, Throwable t) {
+
+                    }
+                });
     }
 
     @Override
