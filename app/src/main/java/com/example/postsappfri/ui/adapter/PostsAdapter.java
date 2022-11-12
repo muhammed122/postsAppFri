@@ -1,5 +1,6 @@
 package com.example.postsappfri.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostHolder> 
     private List<PostResponseItem> posts;
     private PostAction postAction;
 
-    public void addPosts(List<PostResponseItem> posts, PostAction postAction) {
-        this.posts = posts;
+    public PostsAdapter(PostAction postAction) {
         this.postAction = postAction;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void addPosts(List<PostResponseItem> posts) {
+        this.posts = posts;
         notifyDataSetChanged();
 
     }

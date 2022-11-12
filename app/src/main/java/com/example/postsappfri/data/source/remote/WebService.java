@@ -6,6 +6,7 @@ import com.example.postsappfri.data.model.userModel.UserResponse;
 
 import java.util.List;
 
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -20,7 +21,7 @@ public interface WebService {
 
 
     @GET("posts")
-    Call<List<PostResponseItem>> getPosts();
+    Single<List<PostResponseItem>> getPosts();
 
     @POST("posts")
     Call<PostResponseItem> addPost(@Body PostResponseItem post );
